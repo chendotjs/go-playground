@@ -1,4 +1,4 @@
-IMAGE_NAME        ?= xiam/go-playground-unsafebox
+IMAGE_NAME        ?= chendotjs/go-playground-unsafebox
 IMAGE_TAG         ?= latest
 IMAGE_VERSION     ?=
 
@@ -8,10 +8,6 @@ CONTAINER_NAME    ?= go-playground-unsafebox
 
 .PHONY: vendor
 
-test: docker-build
-	go test && \
-	docker run --rm $(IMAGE_NAME):$(GIT_SHORTHASH) test
-
 fmt:
 	for i in $$(find -name \*.go | grep -v vendor); do \
 		gofmt -w $$i && \
@@ -19,7 +15,7 @@ fmt:
 	done
 
 docker-build:
-	docker build -t $(IMAGE_NAME):$(GIT_SHORTHASH) .
+	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 
 docker-push: docker-build
 	docker tag $(IMAGE_NAME):$(GIT_SHORTHASH) $(IMAGE_NAME):$(IMAGE_TAG) && \

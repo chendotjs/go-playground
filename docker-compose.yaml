@@ -1,0 +1,14 @@
+version: '3'
+services:
+  go-playground-unsafebox:
+    image: chendotjs/go-playground-unsafebox
+    ports:
+      - '127.0.0.1:8080:8080'
+
+  go-playground:
+    image: xiam/go-playground
+    ports:
+      - '0.0.0.0:8000:3000'
+    depends_on:
+      - go-playground-unsafebox
+    command: bash -c 'webapp -c http://go-playground-unsafebox:8080/compile?output=json'
